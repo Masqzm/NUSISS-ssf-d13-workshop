@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <form method="POST" action="/task" data-th-object="${task}">
+        <table>
+            <tr>
+                <td>Task name: </td>
+                <td>
+                    <input type="text" data-th-field="*{name}" id="name">
+                    <!-- <span 
+                        data-th-if="${#fields.hasErrors('name')}"
+                        data-th-errors="*{name}" 
+                        data-th-errorclass="error">
+                    </span> -->
+                </td>
+            </tr>
+            <tr>
+                <td>Priority: </td>
+                <td>
+                    <select data-th-field="*{priority}" name="priority" id="priority">
+                        <option data-th-value="low">LOW</option>
+                        <option data-th-value="med">MED</option>
+                        <option data-th-value="high">HIGH</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Complete by: </td>
+                <td>
+                    <input type="date" data-th-field="*{date}" placeholder="DD/MM/YYYY" id="date" >
+                </td>
+            </tr>
+            <tr>
+                <td><button type="submit">Add</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <br>
+    <br>
+
+    <div data-th-if="${taskList != null and !taskList.empty}">
+        <table class="tasks">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Priority</th>
+                    <th>Complete by</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-th-each="t : ${taskList}">
+                    <td data-th-text="${t.name}"></td>
+                    <td data-th-text="${t.priority}"></td>
+                    <td data-th-text="${t.date}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form method="POST" action="/save">
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    <div data-th-if="${taskList == null or taskList.empty}">Looks like you are free!</div>
+
+    
+</body>
+</html>

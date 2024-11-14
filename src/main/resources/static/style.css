@@ -1,0 +1,12 @@
+* {
+    background-color:beige;
+}
+
+.tasks {
+    border: 1px solid;
+    width: 80%;
+}
+.tasks td, .tasks th {
+    border: 1px solid;
+    text-align: left;
+}
