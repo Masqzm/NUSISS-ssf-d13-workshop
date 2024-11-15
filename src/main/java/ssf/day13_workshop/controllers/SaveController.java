@@ -27,6 +27,6 @@ public class SaveController {
 
        model.addAttribute("task", new Task());
        
-       return "save";
+       return "index";
    }
 }
