@@ -8,6 +8,13 @@
 </head>
 <body>
     <form method="POST" action="/task" data-th-object="${task}">
+        <!-- Pass current session's taskList in hidden field -->
+        <div th:each="task, iterStat : ${taskList.tasks}">
+            <input type="hidden" th:name="taskList.tasks[__${iterStat.index}__].name" th:value="${task.name}" />
+            <input type="hidden" th:name="taskList.tasks[__${iterStat.index}__].priority" th:value="${task.priority}" />
+            <input type="hidden" th:name="taskList.tasks[__${iterStat.index}__].dueDate" th:value="${task.dueDate}" />
+        </div>
+
         <table>
             <tr>
                 <td>Task name: </td>
@@ -54,7 +61,7 @@
     <br>
     <br>
 
-    <div data-th-if="${taskList != null and !taskList.empty}">
+    <div data-th-if="${taskList.tasks != null and !taskList.tasks.empty}">
         <table class="tasks">
             <thead>
                 <tr>
@@ -64,7 +71,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-th-each="t : ${taskList}" data-th-object="${t}">
+                <tr data-th-each="t : ${taskList.tasks}" data-th-object="${t}">
                     <td data-th-text="*{name}"></td>
                     <td data-th-text="*{priority}"></td>
                     <td data-th-text="*{#dates.format(dueDate, 'dd MMM yyyy')}"></td>
@@ -73,10 +80,11 @@
         </table>
 
         <form method="POST" action="/save">
+            <!-- <input type="hidden" data-th-object="${taskList}"> -->
             <button type="submit">Save</button>
         </form>
     </div>
-    <div data-th-if="${taskList == null or taskList.empty}">Looks like you are free!</div>
+    <div data-th-if="${taskList.tasks == null or taskList.tasks.empty}">Looks like you are free!</div>
 
     
 </body>
