@@ -13,11 +13,13 @@
                 <td>Task name: </td>
                 <td>
                     <input type="text" data-th-field="*{name}" id="name">
-                    <!-- <span 
+                </td>
+                <td>
+                    <!-- Validation errors -->
+                    <span 
                         data-th-if="${#fields.hasErrors('name')}"
-                        data-th-errors="*{name}" 
-                        data-th-errorclass="error">
-                    </span> -->
+                        data-th-errors="*{name}" class="error">
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -33,7 +35,14 @@
             <tr>
                 <td>Complete by: </td>
                 <td>
-                    <input type="date" data-th-field="*{date}" placeholder="DD/MM/YYYY" id="date" >
+                    <input type="date" data-th-field="*{dueDate}" placeholder="DD/MM/YYYY" id="dueDate" >
+                </td>
+                <td>
+                    <!-- Validation errors -->
+                    <span 
+                        data-th-if="${#fields.hasErrors('dueDate')}"
+                        data-th-errors="*{dueDate}" class="error">
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -55,10 +64,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-th-each="t : ${taskList}">
-                    <td data-th-text="${t.name}"></td>
-                    <td data-th-text="${t.priority}"></td>
-                    <td data-th-text="${t.date}"></td>
+                <tr data-th-each="t : ${taskList}" data-th-object="${t}">
+                    <td data-th-text="*{name}"></td>
+                    <td data-th-text="*{priority}"></td>
+                    <td data-th-text="*{#dates.format(dueDate, 'dd MMM yyyy')}"></td>
                 </tr>
             </tbody>
         </table>

@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpSession;
 import ssf.day13_workshop.models.Task;
 import static ssf.day13_workshop.models.Constants.*;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -19,17 +18,11 @@ public class IndexController {
     @GetMapping
     public String getIndex(HttpSession sess, Model model) {
         
-        // Check if session is avail
-        List<Task> taskList = (List<Task>)sess.getAttribute(TASK_LIST);
-        if (taskList == null) {
-            // Initialize session by creating a list
-            taskList = new LinkedList<>();
-            // Add to the session
-            sess.setAttribute(TASK_LIST, taskList);
-        }
+        // Get taskList from current session (if avail)
+        List<Task> taskList = getTaskListSess(sess);
 
-        model.addAttribute("task", new Task());
-        model.addAttribute(TASK_LIST, taskList);
+        model.addAttribute(ATTR_TASK, new Task());
+        model.addAttribute(ATTR_TASKLIST, taskList);
 
         return "index";
     }
